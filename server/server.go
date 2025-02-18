@@ -10,10 +10,14 @@ import (
 	"github.com/MudassirDev/practice-server/internal/database"
 	"github.com/MudassirDev/practice-server/models/api"
 	"github.com/joho/godotenv"
+	_ "github.com/lib/pq"
 )
 
 func CreateServer() *http.Server {
-	godotenv.Load()
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Couldn't read dotenv files")
+	}
 	dbURL := os.Getenv("DB_URL")
 
 	conn, err := sql.Open("postgres", dbURL)
